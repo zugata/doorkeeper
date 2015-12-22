@@ -1,11 +1,11 @@
 require 'doorkeeper/version'
 require 'doorkeeper/engine'
-require 'doorkeeper/config'
 
 require 'doorkeeper/errors'
 require 'doorkeeper/server'
 require 'doorkeeper/request'
 require 'doorkeeper/validations'
+require 'doorkeeper/config'
 
 require 'doorkeeper/oauth/authorization/code'
 require 'doorkeeper/oauth/authorization/token'

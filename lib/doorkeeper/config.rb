@@ -187,7 +187,10 @@ doorkeeper.
     option :active_record_options,          default: {}
     option :realm,                          default: 'Doorkeeper'
     option :force_ssl_in_redirect_uri,      default: !Rails.env.development?
-    option :grant_flows,                    default: %w(authorization_code client_credentials)
+    option :grant_flows,                    default: {
+                                                       authorization_code: Doorkeeper::Request::AuthorizationCode,
+                                                       client_credentials: Doorkeeper::Request::ClientCredentials
+                                                     }
     option :access_token_generator,         default: "Doorkeeper::OAuth::Helpers::UniqueToken"
 
     attr_reader :reuse_access_token
@@ -252,8 +255,8 @@ doorkeeper.
     # request endpoint, and return them in array.
     #
     def calculate_token_grant_types
-      types = grant_flows - ['implicit']
-      types << 'refresh_token' if refresh_token_enabled?
+      types = grant_flows
+      types['refresh_token'] = Doorkeeper::Request::RefreshToken if refresh_token_enabled?
       types
     end
   end
